@@ -2,7 +2,7 @@ import sys
 sys.path.append(r"..")
 
 import unittest
-from Data_Structures.doubly_linked_list import DoublyLinkedList
+from Data_Structures.Source.doubly_linked_list import DoublyLinkedList
 
 
 class TestLinkedList(unittest.TestCase):

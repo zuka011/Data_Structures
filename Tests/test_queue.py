@@ -2,7 +2,7 @@ import sys
 sys.path.append(r"..")
 
 import unittest
-from Data_Structures.queue import Queue
+from Data_Structures.Source.queue import Queue
 
 
 class TestQueue(unittest.TestCase):

@@ -2,7 +2,7 @@ import sys
 sys.path.append(r"..")
 
 import unittest
-from Data_Structures.singly_linked_list import SinglyLinkedList
+from Data_Structures.Source.singly_linked_list import SinglyLinkedList
 
 
 class TestLinkedList(unittest.TestCase):

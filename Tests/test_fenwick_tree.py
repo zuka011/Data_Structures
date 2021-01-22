@@ -2,7 +2,7 @@ import sys
 sys.path.append(r"..")
 
 import unittest
-from Data_Structures.fenwick_tree import FenwickTree
+from Data_Structures.Source.fenwick_tree import FenwickTree
 
 
 class TestFenwickTree(unittest.TestCase):
