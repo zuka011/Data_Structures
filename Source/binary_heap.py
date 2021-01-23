@@ -46,7 +46,7 @@ class BinaryHeap:
     __INIT_MAX_SIZE = 5
 
     def __init__(self, data=None, key=(lambda x: x)):
-        """Creates a Binary (min) heap from the elements in {data}.
+        """Constructor for a Binary (min) heap.
 
         {key} is a function that returns the value that is used during 
         comparisons (by default it is the element itself). The < operator is used

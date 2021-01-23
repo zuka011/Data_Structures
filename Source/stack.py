@@ -1,4 +1,8 @@
-from Data_Structures.singly_linked_list import SinglyLinkedList
+import sys
+
+sys.path.append(r"..")
+
+from Source.singly_linked_list import SinglyLinkedList
 
 
 class Stack:

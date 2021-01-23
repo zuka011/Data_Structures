@@ -1,4 +1,8 @@
-from Data_Structures.linked_list import LinkedList
+import sys
+
+sys.path.append(r"..")
+
+from Source.linked_list import LinkedList
 
 
 class _LinkedListNode():
