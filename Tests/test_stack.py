@@ -1,8 +1,10 @@
 import sys
+
 sys.path.append(r"..")
 
 import unittest
-from Data_Structures.Source.stack import Stack
+
+from Source.stack import Stack
 
 
 class TestStack(unittest.TestCase):

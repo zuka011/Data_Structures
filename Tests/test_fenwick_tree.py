@@ -1,8 +1,10 @@
 import sys
+
 sys.path.append(r"..")
 
 import unittest
-from Data_Structures.Source.fenwick_tree import FenwickTree
+
+from Source.fenwick_tree import FenwickTree
 
 
 class TestFenwickTree(unittest.TestCase):
@@ -16,7 +18,7 @@ class TestFenwickTree(unittest.TestCase):
         with self.assertRaises(TypeError):
             f_tree = FenwickTree(1, 1)
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             f_tree = FenwickTree(-1)
 
     def test_len(self):
