@@ -13,9 +13,9 @@ class FenwickTree:
 
         if size is None:
             if data is None: 
-                raise Exception("You need to specify the size of the Fenwick Tree.")
+                raise ValueError("You need to specify the size of the Fenwick Tree.")
         elif size <= 0:
-            raise Exception("You can't have a Fenwick Tree of non-positive size.")
+            raise ValueError("You can't have a Fenwick Tree of non-positive size.")
 
         self.__check_data(data)
         
