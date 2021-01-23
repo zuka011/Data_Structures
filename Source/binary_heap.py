@@ -135,6 +135,7 @@ class BinaryHeap:
                 self.__list[self.__size] = None
                 self.__size -= 1
                 
+                self.__bubble_up(i)
                 self.__bubble_down(i)
 
                 return True

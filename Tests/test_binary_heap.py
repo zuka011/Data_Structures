@@ -143,17 +143,27 @@ class TestBinaryHeap(unittest.TestCase):
         for i in range(1, 6):
             self.assertEqual(b_heap.remove(i), True)
             self.assertEqual(b_heap.remove(5 + i), False)
+            self.__is_heap(b_heap)
 
         self.assertEqual(len(b_heap), 0)
 
+        data = [1, 2, 3, 4, 6, 7, 10]
+        b_heap = BinaryHeap([1, 6, 2, 7, 10, 3, 4])
+        
+        self.assertEqual(b_heap.remove(7), True)
+        self.__is_heap(b_heap)
+
         b_heap = BinaryHeap([(1, 2), (5, 6), (3, 4)], lambda x: x[0])
         self.assertEqual(b_heap.remove((1, 2)), True)
+        self.__is_heap(b_heap)
         self.assertEqual(b_heap.remove((3, 4)), True)
+        self.__is_heap(b_heap)
         self.assertEqual(b_heap.remove((5, 7)), False)
 
         self.assertEqual([elem for elem in b_heap], [(5, 6)])
 
         self.assertEqual(b_heap.remove((5, 6)), True)
+        self.__is_heap(b_heap)
         self.assertEqual(len(b_heap), 0)
 
     def __push_elems(self, b_heap, data):
@@ -185,6 +195,20 @@ class TestBinaryHeap(unittest.TestCase):
 
         self.assertEqual(sorted(data, key=key), retreived_data)
 
+    def __is_heap(self, b_heap, key=lambda x: x):
+
+        working_values = [None] + [elem for elem in b_heap]
+        for i in range(1, len(working_values)):
+
+            left_child = i * 2
+            right_child = left_child + 1
+
+            if left_child < len(working_values):
+                self.assertLessEqual(key(working_values[i]), key(working_values[left_child]))
+
+            if right_child < len(working_values):
+                self.assertLessEqual(key(working_values[i]), key(working_values[right_child]))
+    
 
 if __name__ == "__main__":
     unittest.main()
