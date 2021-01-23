@@ -125,7 +125,7 @@ class BinaryHeap:
         return self.__list[1]
 
     def remove(self, element):
-        """Removes {element} from the heap, if it exists. 
+        """Removes {element} from the heap, if it exists. The == operator is used for testing equality. 
         Returns True if {element} was removed. O(N)"""
 
         for i in range(1, self.__size + 1):
