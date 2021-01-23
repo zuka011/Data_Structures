@@ -1,7 +1,7 @@
 
 
 class LinkedList():
-    """A singly linked list data structure."""
+    """A linked list data structure."""
 
     def __init__(self, data=None):
         """Constructor for Linked List. O(N), N = #elements in {data}
