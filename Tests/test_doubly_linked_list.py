@@ -3,6 +3,7 @@ import sys
 sys.path.append(r"..")
 
 import unittest
+from random import choice as random_choice
 
 from Source.doubly_linked_list import DoublyLinkedList
 
@@ -68,19 +69,6 @@ class TestLinkedList(unittest.TestCase):
         generatedList = [elem for elem in l_list]
         self.assertEqual(str(l_list), str(generatedList))
 
-
-    def __push_elems(self, l_list, elems, push_location="back"):
-
-        starting_length = len(l_list)
-
-        for elem in elems: 
-            if push_location == "back": 
-                l_list.push_back(elem)
-            else:
-                l_list.push_front(elem)
-
-        self.assertEqual(len(l_list) - starting_length, len(elems))
-
     def test_push_back(self):
 
         l_list = DoublyLinkedList()
@@ -138,6 +126,58 @@ class TestLinkedList(unittest.TestCase):
 
         with self.assertRaises(Exception):
             l_list.peek_front()
+
+    def test_remove(self):
+
+        l_list = DoublyLinkedList([1, 2, 3, 4, 5])
+        
+        for i in range(1, 6):
+            self.assertEqual(l_list.remove(i), True)
+
+        self.assertEqual(len(l_list), 0)
+
+        data = [i for i in range(200)]
+        l_list = DoublyLinkedList(data)
+
+        for _ in range(200):
+            target_element = random_choice(data)
+            data.remove(target_element)
+            l_list.remove(target_element)
+            self.assertEqual(len(l_list), len(data)) 
+
+    def test_contains(self):
+
+        l_list = DoublyLinkedList()
+        
+        for i in range(6, 11):
+            self.assertEqual(l_list.contains(i), False)
+
+        l_list = DoublyLinkedList([1, 2, 3, 4, 5])
+        
+        for i in range(1, 6):
+            self.assertEqual(l_list.contains(i), True)
+
+        for i in range(6, 11):
+            self.assertEqual(l_list.contains(i), False)
+
+        data = [i for i in range(200)]
+        l_list = DoublyLinkedList(data)
+
+        for _ in range(200):
+            target_element = random_choice(data)
+            self.assertEqual(l_list.contains(target_element), True) 
+
+    def __push_elems(self, l_list, elems, push_location="back"):
+
+        starting_length = len(l_list)
+
+        for elem in elems: 
+            if push_location == "back": 
+                l_list.push_back(elem)
+            else:
+                l_list.push_front(elem)
+
+        self.assertEqual(len(l_list) - starting_length, len(elems))
 
     def __pop_elems(self, l_list, elems, pop_location="back"):
 

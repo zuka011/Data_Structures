@@ -58,26 +58,6 @@ class LinkedList():
         else:
             raise StopIteration
 
-    def push_back(self, data):
-        """Adds an element to the end of the list."""
-
-        raise NotImplementedError
-
-    def push_front(self, data):
-        """Adds an element to the start of the list."""
-
-        raise NotImplementedError
-
-    def pop_back(self):
-        """Removes and returns an element from the end of the list."""
-
-        raise NotImplementedError
-
-    def pop_front(self):
-        """Removes and returns an element from the start of the list."""
-        
-        raise NotImplementedError
-
     def peek_back(self):
         """Returns the element at the end of the list. O(1)"""
 
