@@ -118,7 +118,7 @@ class AVLTree:
         for element in elements:
             map_function(element, *map_arguments)
 
-    def __is_balanced(self, curr_node: _AVLTreeNode or None):
+    def __is_balanced(self, curr_node: _AVLTreeNode or None) -> bool:
         """Checks if the AVL Tree is balanced (For debugging purpoes)."""
 
         if curr_node is None:
@@ -143,7 +143,7 @@ class AVLTree:
 
         return None
 
-    def __add_recursive(self, curr_node: _AVLTreeNode or None, element):
+    def __add_recursive(self, curr_node: _AVLTreeNode or None, element) -> _AVLTreeNode:
         """Adds a node containing {element} to the AVL Tree with 
         root {curr_node} and returns a pointer to the new root of
         the tree. O(logN), N = size of the tree"""
