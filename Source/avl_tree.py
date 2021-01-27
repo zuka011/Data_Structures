@@ -119,7 +119,7 @@ class AVLTree:
             map_function(element, *map_arguments)
 
     def __is_balanced(self, curr_node: _AVLTreeNode or None) -> bool:
-        """Checks if the AVL Tree is balanced (For debugging purpoes)."""
+        """Checks if the AVL Tree is balanced (For debugging purposes)."""
 
         if curr_node is None:
             return True
