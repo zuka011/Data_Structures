@@ -19,6 +19,8 @@ class AVLTree:
     
     This implementation allows for duplicate values."""
 
+    __DEBUG = False
+
     def __init__(self, data: Iterable=None, key=lambda x: x):
         """Constructor for an AVL tree.
 
@@ -72,7 +74,7 @@ class AVLTree:
         self.__root = self.__add_recursive(self.__root, element)
         self.__size += 1
 
-        if not self.__is_balanced(self.__root):
+        if AVLTree.__DEBUG and not self.__is_balanced(self.__root):
             raise AssertionError("This AVL Tree is not balanced any more.")
 
     def remove(self, element) -> bool:
@@ -95,7 +97,7 @@ class AVLTree:
 
             self.__remove_node(successor_node)
 
-        if not self.__is_balanced(self.__root):
+        if AVLTree.__DEBUG and not self.__is_balanced(self.__root):
             raise AssertionError("This AVL Tree is not balanced any more.")
 
         return True
