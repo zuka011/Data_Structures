@@ -1,4 +1,5 @@
-from functools import singledispatch, total_ordering
+from functools import total_ordering
+
 
 @total_ordering
 class _Infinity:
