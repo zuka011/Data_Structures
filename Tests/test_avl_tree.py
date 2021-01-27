@@ -1,3 +1,4 @@
+from datetime import date
 import sys
 
 sys.path.append(r"..")
@@ -98,10 +99,12 @@ class TestAVLTree(unittest.TestCase):
         avl_tree = AVLTree()
         data = [randint(0, 100) for _ in range(200)]
         self.__add_elems(avl_tree, data)
+        self.assertEqual([elem for elem in avl_tree], sorted(data))
         working_values1 = [elem for elem in avl_tree]
 
         avl_tree = AVLTree()
         self.__add_elems(avl_tree, data[::-1])
+        self.assertEqual([elem for elem in avl_tree], sorted(data))
         working_values2 = [elem for elem in avl_tree]
 
         self.assertEqual(working_values1, working_values2)
@@ -111,6 +114,38 @@ class TestAVLTree(unittest.TestCase):
         self.__add_elems(avl_tree, data)
         working_values = [elem for elem in avl_tree]
         self.assertEqual(working_values, sorted(data))
+
+    def test_remove(self):
+
+        avl_tree = AVLTree([1, 2, 3, 4, 5])
+
+        for i in range(1, 6):
+            self.assertEqual(avl_tree.remove(i), True)
+            self.assertEqual(avl_tree.remove(5 + i), False)
+
+        self.assertEqual(len(avl_tree), 0)
+
+        data = [1, 2, 3, 4, 6, 7, 10]
+        avl_tree = AVLTree([1, 6, 2, 7, 10, 3, 4])
+        
+        self.assertEqual(avl_tree.remove(7), True)
+
+        avl_tree = AVLTree([(1, 2), (5, 6), (3, 4)], lambda x: x[0])
+        self.assertEqual(avl_tree.remove((1, 2)), True)
+        self.assertEqual(avl_tree.remove((3, 4)), True)
+
+        self.assertEqual([elem for elem in avl_tree], [(5, 6)])
+
+        self.assertEqual(avl_tree.remove((5, 6)), True)
+        self.assertEqual(len(avl_tree), 0)
+
+        data = [randint(0, 100) for _ in range(200)]
+        avl_tree = AVLTree(data)
+        self.__remove_elems(avl_tree, data)
+
+        data = ["".join([random_choice(ascii_letters) for _ in range(randint(1, 10))]) for _ in range(20)]
+        avl_tree = AVLTree(data)
+        self.__remove_elems(avl_tree, data)
 
     def test_contains(self):
 
@@ -130,98 +165,57 @@ class TestAVLTree(unittest.TestCase):
         for elem in data:
             self.assertEqual(avl_tree.contains(elem), True)
 
-    # def test_pop(self):
+    def test_integration(self):
 
-        # avl_tree = AVLTree([1, 5, 3, 4])
-        # data = [avl_tree.pop() for _ in range(4)]
-        # self.assertEqual(data, [1, 3, 4, 5])
+        random_data_size_1 = 100
+        random_data_size_2 = 200
 
-        # data = [randint(0, 100) for _ in range(200)]
-        # avl_tree = AVLTree(data)
-        # self.__pop_elems(avl_tree, data)
-        # self.assertEqual(len(avl_tree), 0)
+        avl_tree = AVLTree()
+        data_1 = [randint(0, 100) for _ in range(random_data_size_1)] 
+        data_2 = [randint(101, 1000) for _ in range(random_data_size_2)]
 
-        # avl_tree = AVLTree(data[::-1])
-        # self.__pop_elems(avl_tree, data)
-        # self.assertEqual(len(avl_tree), 0)
+        self.__add_elems(avl_tree, data_1)
+        self.assertEqual(len(avl_tree), random_data_size_1)
 
-        # data = [(i, 300 - i) for i in range(300)]
-        # avl_tree = AVLTree(data, key=lambda x: x[1])
-        # self.__pop_elems(avl_tree, data, key=lambda x: x[1])
-        # self.assertEqual(len(avl_tree), 0)
+        for elem in data_1:
+            self.assertEqual(avl_tree.contains(elem), True)
 
-        # data = ["".join([random_choice(ascii_letters) for _ in range(randint(1, 10))]) for _ in range(20)]
-        # avl_tree = AVLTree(data)
-        # self.__pop_elems(avl_tree, data)
-        # self.assertEqual(len(avl_tree), 0)
+        for elem in data_2:
+            self.assertEqual(avl_tree.contains(elem), False)
 
-        # with self.assertRaises(Exception):
-        #     avl_tree.pop()
+        self.__add_elems(avl_tree, data_2)
+        self.assertEqual(len(avl_tree), random_data_size_1 + random_data_size_2)
 
-    # def test_peek(self):
-        
-    #     avl_tree = AVLTree([1, 2, 3, 4, 5])
-        
-    #     for i in range(1, 6):
-    #         self.assertEqual(avl_tree.peek(), i)
-    #         avl_tree.pop()
-        
-    #     avl_tree = AVLTree([(1, 2), (5, 6), (3, 4)], lambda x: x[0])
-        
-    #     for i in range(1, 4):
-    #         self.assertEqual(avl_tree.peek()[1], i * 2)
-    #         avl_tree.pop()
-        
-    #     with self.assertRaises(Exception):
-    #         avl_tree.peek()
-        
-    # def test_remove(self):
+        for elem in data_2:
+            self.assertEqual(avl_tree.contains(elem), True)
 
-    #     avl_tree = AVLTree([1, 2, 3, 4, 5])
+        self.assertEqual([elem for elem in avl_tree], sorted(data_1 + data_2))
 
-    #     for i in range(1, 6):
-    #         self.assertEqual(avl_tree.remove(i), True)
-    #         self.assertEqual(avl_tree.remove(5 + i), False)
-    #         self.__is_heap(avl_tree)
+        self.__remove_elems(avl_tree, data_1)
+        self.assertEqual(len(avl_tree), random_data_size_2)
 
-    #     self.assertEqual(len(avl_tree), 0)
+        for elem in data_2:
+            self.assertEqual(avl_tree.contains(elem), True)
 
-    #     data = [1, 2, 3, 4, 6, 7, 10]
-    #     avl_tree = AVLTree([1, 6, 2, 7, 10, 3, 4])
-        
-    #     self.assertEqual(avl_tree.remove(7), True)
-    #     self.__is_heap(avl_tree)
-
-    #     avl_tree = AVLTree([(1, 2), (5, 6), (3, 4)], lambda x: x[0])
-    #     self.assertEqual(avl_tree.remove((1, 2)), True)
-    #     self.__is_heap(avl_tree)
-    #     self.assertEqual(avl_tree.remove((3, 4)), True)
-    #     self.__is_heap(avl_tree)
-    #     self.assertEqual(avl_tree.remove((5, 7)), False)
-
-    #     self.assertEqual([elem for elem in avl_tree], [(5, 6)])
-
-    #     self.assertEqual(avl_tree.remove((5, 6)), True)
-    #     self.__is_heap(avl_tree)
-    #     self.assertEqual(len(avl_tree), 0)
+        for elem in data_1:
+            self.assertEqual(avl_tree.contains(elem), False)
+            
+        self.__remove_elems(avl_tree, data_2)
+        self.assertEqual(len(avl_tree), 0)
 
     def __add_elems(self, avl_tree, data):
-
-        starting_length = len(avl_tree)
 
         for elem in data:
             avl_tree.add(elem)
 
-        self.assertEqual([elem for elem in avl_tree], sorted(data))
+    def __remove_elems(self, avl_tree, data):
 
-    # def __pop_elems(self, avl_tree, data, key=lambda x: x):
+        starting_length = len(avl_tree)
 
-    #     retreived_data = []
+        for elem in data:
+            self.assertEqual(avl_tree.remove(elem), True)
 
-    #     while avl_tree:
-    #         retreived_data.append(avl_tree.pop())
-
-    #     self.assertEqual(sorted(data, key=key), retreived_data)
+        self.assertEqual(starting_length - len(avl_tree), len(data))
     
 
 if __name__ == "__main__":

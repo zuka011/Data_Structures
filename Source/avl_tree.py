@@ -82,18 +82,25 @@ class AVLTree:
         True if the element was succesfully removed, false otherwise. 
         O(logN), N = size of the tree"""
 
-        removed_node = self.__find_node(element)
+        target_node = self.__find_node(element)
 
-        if removed_node is None:
+        if target_node is None:
             return False
 
         self.__size -= 1
 
-        # return True
-        pass
+        if target_node.left is None or target_node.right is None:
+            self.__remove_node(target_node)
+        else:
+            successor_node = self.__get_largest_node(target_node.left)
+            target_node.data = successor_node.data
 
-    def __remove_leaf_node(self, leaf_node: _AVLTreeNode):
-        pass
+            self.__remove_node(successor_node)
+
+        if not self.__is_balanced(self.__root):
+            raise AssertionError("This AVL Tree is not balanced any more.")
+
+        return True
 
     def contains(self, element) -> bool:
         """Returns true if the element is in the tree, false otherwise.
@@ -243,6 +250,43 @@ class AVLTree:
         self.__get_sorted_elements(curr_node.left, elements)
         elements.append(curr_node.data)
         self.__get_sorted_elements(curr_node.right, elements)
+
+    def __remove_node(self, target_node: _AVLTreeNode) -> None:
+        """Removes {target_node} (must have only one subtree) from the tree and 
+        attaches it's successor (the subtree) to it's parent (if one exists)."""             
+
+        if target_node is self.__root:
+            self.__root = self.__get_subtree(target_node)
+            if self.__root is not None:
+                self.__root.parent = None
+        else:
+            new_child_node = self.__get_subtree(target_node)
+            if new_child_node is not None: 
+                new_child_node.parent = target_node.parent
+
+            if target_node is target_node.parent.left:
+                target_node.parent.left = new_child_node
+            else:
+                target_node.parent.right = new_child_node
+
+    def __get_subtree(self, target_node: _AVLTreeNode) -> _AVLTreeNode or None:
+        """Returns the only subtree of {target_node} if it has one or None
+        if it doesn't."""
+
+        if target_node.left is not None:
+            return target_node.left
+
+        return target_node.right
+
+    def __get_largest_node(self, root_node: _AVLTreeNode) -> _AVLTreeNode:
+        """Returns the largest node in the tree with root {root_node}."""
+
+        curr_node = root_node
+        while curr_node.right is not None:
+            curr_node = curr_node.right
+
+        return curr_node
+
 
 
 
